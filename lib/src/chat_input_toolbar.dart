@@ -39,7 +39,7 @@ class ChatInputToolbar extends StatelessWidget {
     this.scrollController,
     this.text,
     this.textInputAction,
-    this.sendOnEnter = false,
+    this.sendOnEnter = true,
     this.onTextChange,
     this.inputDisabled = false,
     this.controller,
@@ -93,15 +93,23 @@ class ChatInputToolbar extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Directionality(
                     textDirection: textDirection,
-                    child: TextField(
+                    child: RawKeyboardListener(
+                      focusNode: FocusNode(),
+                      onKey: (event){
+                        if(event.isKeyPressed(LogicalKeyboardKey.enter) && !event.isShiftPressed){
+                          _sendMessage(context, message);
+                        }
+                      },
+                      child:TextField(
                       focusNode: focusNode,
                       onChanged: (value) {
+                        if(controller!.text.length == 1 && controller!.text=="\n"){ // hacky but this works, without this there's a residual newline char after _sendmessage lmao
+                          controller!.text="";
+                        }
                         onTextChange!(value);
                       },
                       onSubmitted: (value) {
-                        if (sendOnEnter) {
-                          _sendMessage(context, message);
-                        }
+                        print("how did u possibly get here lol");
                       },
                       textInputAction: textInputAction,
                       buildCounter: (
@@ -127,7 +135,7 @@ class ChatInputToolbar extends StatelessWidget {
                       cursorColor: inputCursorColor,
                       cursorWidth: inputCursorWidth,
                       enabled: !inputDisabled,
-                    ),
+                    )),
                   ),
                 ),
               ),
@@ -162,7 +170,7 @@ class ChatInputToolbar extends StatelessWidget {
     if (text!.length != 0) {
       await onSend!(message);
 
-      controller!.text = "";
+      controller!.clear();
 
       onTextChange!("");
 
