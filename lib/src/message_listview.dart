@@ -344,6 +344,7 @@ class _MessageListViewState extends State<MessageListView> {
                 Container(
                   height: 100.0,
                 ),
+                if(messagesToShow!=widget.messages.length)
                 AnimatedPositioned(
                   top: widget.showLoadMore! ? 8.0 : -50.0,
                   duration: Duration(milliseconds: 200),
