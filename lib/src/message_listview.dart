@@ -138,7 +138,7 @@ class _MessageListViewState extends State<MessageListView> {
                   reverse: widget.inverted,
                   itemCount: messagesToShow,
                   itemBuilder: (context, i) {
-                    i = widget.messages.length-messagesToShow+i;
+                    i = widget.messages.length - messagesToShow + i;
                     bool showAvatar = shouldShowAvatar(i);
                     bool first = false;
                     bool last = false;
@@ -148,7 +148,7 @@ class _MessageListViewState extends State<MessageListView> {
                       first = true;
                     } else if (widget.messages.length - 1 == i) {
                       last = true;
-                      print(widget.messages[widget.messages.length-1].text);
+                      print(widget.messages[widget.messages.length - 1].text);
                     }
 
                     DateTime messageDate = DateTime(
@@ -344,26 +344,27 @@ class _MessageListViewState extends State<MessageListView> {
                 Container(
                   height: 100.0,
                 ),
-                if(messagesToShow!=widget.messages.length)
-                AnimatedPositioned(
-                  top: widget.showLoadMore! ? 8.0 : -50.0,
-                  duration: Duration(milliseconds: 200),
-                  child: widget.showLoadEarlierWidget != null
-                      ? widget.showLoadEarlierWidget!()
-                      : LoadEarlierWidget(
-                          // onLoadEarlier: widget.onLoadEarlier
-                          onLoadEarlier: (){
-                            print("clicked load");
-                            print(widget);
-                            print(messagesToShow);
-                            setState(() {
-                              messagesToShow=min(messagesToShow+10, widget.messages.length);
-                            });
-                            print(messagesToShow);
-                          },
-                          defaultLoadCallback: widget.defaultLoadCallback,
-                        ),
-                ),
+                if (messagesToShow != widget.messages.length)
+                  AnimatedPositioned(
+                    top: widget.showLoadMore! ? 8.0 : -50.0,
+                    duration: Duration(milliseconds: 200),
+                    child: widget.showLoadEarlierWidget != null
+                        ? widget.showLoadEarlierWidget!()
+                        : LoadEarlierWidget(
+                            // onLoadEarlier: widget.onLoadEarlier
+                            onLoadEarlier: () {
+                              print("clicked load");
+                              print(widget);
+                              print(messagesToShow);
+                              setState(() {
+                                messagesToShow = min(messagesToShow + 10,
+                                    widget.messages.length);
+                              });
+                              print(messagesToShow);
+                            },
+                            defaultLoadCallback: widget.defaultLoadCallback,
+                          ),
+                  ),
               ],
             ),
           ),

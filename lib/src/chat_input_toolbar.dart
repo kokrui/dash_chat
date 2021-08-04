@@ -94,48 +94,51 @@ class ChatInputToolbar extends StatelessWidget {
                   child: Directionality(
                     textDirection: textDirection,
                     child: RawKeyboardListener(
-                      focusNode: FocusNode(),
-                      onKey: (event){
-                        if(event.isKeyPressed(LogicalKeyboardKey.enter) && !event.isShiftPressed){
-                          _sendMessage(context, message);
-                        }
-                      },
-                      child:TextField(
-                      focusNode: focusNode,
-                      onChanged: (value) {
-                        if(controller!.text.length == 1 && controller!.text=="\n"){ // hacky but this works, without this there's a residual newline char after _sendmessage lmao
-                          controller!.text="";
-                        }
-                        onTextChange!(value);
-                      },
-                      onSubmitted: (value) {
-                        print("how did u possibly get here lol");
-                      },
-                      textInputAction: textInputAction,
-                      buildCounter: (
-                        BuildContext context, {
-                        int? currentLength,
-                        int? maxLength,
-                        bool? isFocused,
-                      }) =>
-                          null,
-                      decoration: inputDecoration != null
-                          ? inputDecoration
-                          : InputDecoration.collapsed(
-                              hintText: "",
-                              fillColor: Colors.white,
-                            ),
-                      textCapitalization: textCapitalization!,
-                      controller: controller,
-                      style: inputTextStyle,
-                      maxLength: maxInputLength,
-                      minLines: 1,
-                      maxLines: inputMaxLines,
-                      showCursor: showInputCursor,
-                      cursorColor: inputCursorColor,
-                      cursorWidth: inputCursorWidth,
-                      enabled: !inputDisabled,
-                    )),
+                        focusNode: FocusNode(),
+                        onKey: (event) {
+                          if (event.isKeyPressed(LogicalKeyboardKey.enter) &&
+                              !event.isShiftPressed) {
+                            _sendMessage(context, message);
+                          }
+                        },
+                        child: TextField(
+                          focusNode: focusNode,
+                          onChanged: (value) {
+                            if (controller!.text.length == 1 &&
+                                controller!.text == "\n") {
+                              // hacky but this works, without this there's a residual newline char after _sendmessage lmao
+                              controller!.text = "";
+                            }
+                            onTextChange!(value);
+                          },
+                          onSubmitted: (value) {
+                            print("how did u possibly get here lol");
+                          },
+                          textInputAction: textInputAction,
+                          buildCounter: (
+                            BuildContext context, {
+                            int? currentLength,
+                            int? maxLength,
+                            bool? isFocused,
+                          }) =>
+                              null,
+                          decoration: inputDecoration != null
+                              ? inputDecoration
+                              : InputDecoration.collapsed(
+                                  hintText: "",
+                                  fillColor: Colors.white,
+                                ),
+                          textCapitalization: textCapitalization!,
+                          controller: controller,
+                          style: inputTextStyle,
+                          maxLength: maxInputLength,
+                          minLines: 1,
+                          maxLines: inputMaxLines,
+                          showCursor: showInputCursor,
+                          cursorColor: inputCursorColor,
+                          cursorWidth: inputCursorWidth,
+                          enabled: !inputDisabled,
+                        )),
                   ),
                 ),
               ),
