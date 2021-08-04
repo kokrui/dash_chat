@@ -148,7 +148,6 @@ class _MessageListViewState extends State<MessageListView> {
                       first = true;
                     } else if (widget.messages.length - 1 == i) {
                       last = true;
-                      print(widget.messages[widget.messages.length - 1].text);
                     }
 
                     DateTime messageDate = DateTime(
@@ -353,14 +352,10 @@ class _MessageListViewState extends State<MessageListView> {
                         : LoadEarlierWidget(
                             // onLoadEarlier: widget.onLoadEarlier
                             onLoadEarlier: () {
-                              print("clicked load");
-                              print(widget);
-                              print(messagesToShow);
                               setState(() {
                                 messagesToShow = min(messagesToShow + 10,
                                     widget.messages.length);
                               });
-                              print(messagesToShow);
                             },
                             defaultLoadCallback: widget.defaultLoadCallback,
                           ),
