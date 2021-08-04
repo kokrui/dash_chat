@@ -36,7 +36,6 @@ class MessageListView extends StatefulWidget {
   final bool textBeforeImage;
   final double? avatarMaxSize;
   final BoxDecoration Function(ChatMessage, bool?)? messageDecorationBuilder;
-
   MessageListView({
     this.showLoadEarlierWidget,
     this.avatarMaxSize,
@@ -82,6 +81,7 @@ class MessageListView extends StatefulWidget {
 
 class _MessageListViewState extends State<MessageListView> {
   double previousPixelPostion = 0.0;
+  int messagesToShow = 20;
 
   bool scrollNotificationFunc(ScrollNotification scrollNotification) {
     double bottom =
@@ -136,8 +136,9 @@ class _MessageListViewState extends State<MessageListView> {
                   controller: widget.scrollController,
                   shrinkWrap: true,
                   reverse: widget.inverted,
-                  itemCount: widget.messages.length,
+                  itemCount: messagesToShow,
                   itemBuilder: (context, i) {
+                    i = widget.messages.length-messagesToShow+i;
                     bool showAvatar = shouldShowAvatar(i);
                     bool first = false;
                     bool last = false;
@@ -147,6 +148,7 @@ class _MessageListViewState extends State<MessageListView> {
                       first = true;
                     } else if (widget.messages.length - 1 == i) {
                       last = true;
+                      print(widget.messages[widget.messages.length-1].text);
                     }
 
                     DateTime messageDate = DateTime(
@@ -348,7 +350,16 @@ class _MessageListViewState extends State<MessageListView> {
                   child: widget.showLoadEarlierWidget != null
                       ? widget.showLoadEarlierWidget!()
                       : LoadEarlierWidget(
-                          onLoadEarlier: widget.onLoadEarlier,
+                          // onLoadEarlier: widget.onLoadEarlier
+                          onLoadEarlier: (){
+                            print("clicked load");
+                            print(widget);
+                            print(messagesToShow);
+                            setState(() {
+                              messagesToShow=min(messagesToShow+10, widget.messages.length);
+                            });
+                            print(messagesToShow);
+                          },
                           defaultLoadCallback: widget.defaultLoadCallback,
                         ),
                 ),
