@@ -116,7 +116,7 @@ class _MessageListViewState extends State<MessageListView> {
   @override
   Widget build(BuildContext context) {
     DateTime? currentDate;
-
+//    messagesToShow = min(messagesToShow,widget.messages.length);
     final constraints = widget.constraints ??
         BoxConstraints(
             maxHeight: MediaQuery.of(context).size.height,
@@ -136,9 +136,9 @@ class _MessageListViewState extends State<MessageListView> {
                   controller: widget.scrollController,
                   shrinkWrap: true,
                   reverse: widget.inverted,
-                  itemCount: messagesToShow,
+                  itemCount: min(messagesToShow,widget.messages.length),
                   itemBuilder: (context, i) {
-                    i = widget.messages.length - messagesToShow + i;
+                    i = widget.messages.length -  min(messagesToShow,widget.messages.length).toInt() + i;
                     bool showAvatar = shouldShowAvatar(i);
                     bool first = false;
                     bool last = false;
