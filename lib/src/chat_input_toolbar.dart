@@ -97,7 +97,7 @@ class ChatInputToolbar extends StatelessWidget {
                         focusNode: FocusNode(),
                         onKey: (event) {
                           if (event.isKeyPressed(LogicalKeyboardKey.enter) &&
-                              !event.isShiftPressed) {
+                              !event.isShiftPressed &&text!.length>1) {
                             _sendMessage(context, message);
                           }
                         },
